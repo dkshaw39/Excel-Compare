@@ -24,8 +24,8 @@ def compare_records(df1,df2):
         # Iterating the list's values and comparing them
         for m, n in zip(range(len(a)), range(len(b))):
             if a[m] != b[n]:
-                print('Column name : \'{}\' and Row Number : {}'.format(i,m))
-
+                f= open("mylog.txt", "w")
+                f.write('Column name : \'{}\' and Row Number : {}'.format(i,m))
 if __name__=='__main__':
     df1 = read_excel(r'data1.xlsx')
     df2 = read_excel(r'data2.xlsx')
