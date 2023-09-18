@@ -18,14 +18,17 @@ def get_column_values(data1: pd.Series,data2:pd.Series):
 
 def compare_records(df1,df2):
     # Iterating the Columns Names of both Sheets
+    log=[]
     for i,j in zip(df1,df2):
         # get col values
         a,b =get_column_values(df1[i],df2[j])
         # Iterating the list's values and comparing them
         for m, n in zip(range(len(a)), range(len(b))):
             if a[m] != b[n]:
-                f= open("mylog.txt", "w")
-                f.write('Column name : \'{}\' and Row Number : {}'.format(i,m))
+                log.append('Column name : \'{}\' and Row Number : {}'.format(i,m)+"\n")
+    f= open("mylog.txt", "w")
+    f.writelines(log)
+    f.close()
 if __name__=='__main__':
     df1 = read_excel(r'data1.xlsx')
     df2 = read_excel(r'data2.xlsx')
