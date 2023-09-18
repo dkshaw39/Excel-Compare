@@ -2,17 +2,31 @@ import pandas as pd
 
 #Reading two Excel Sheets
 
-sheet1 = pd.read_excel(r'data\data1.xlsx')
-sheet2 = pd.read_excel(r'data\data2.xlsx')
-sheet1=sheet1.set_index(['Name'])
-sheet2=sheet2.set_index(['Name'])
-print(sheet1)
-print(sheet2)
+def read_excel(file):
+    return pd.read_excel(file)
 
-idx = sheet1.index.intersection(sheet2.index)
+def get_column_values(data1: pd.Series,data2:pd.Series):
+    a,b =[],[]
+    # Iterating the columns values
+    for m, n in zip(data1,data2):
+        a.append(m)
+        b.append(n)
+    # Sorting the each columns value
+    a.sort()
+    b.sort()
+    return a,b
 
-df_diff = sheet1.loc[idx].compare(sheet2.loc[idx],keep_equal=True)
+def compare_records(df1,df2):
+    # Iterating the Columns Names of both Sheets
+    for i,j in zip(df1,df2):
+        # get col values
+        a,b =get_column_values(df1[i],df2[j])
+        # Iterating the list's values and comparing them
+        for m, n in zip(range(len(a)), range(len(b))):
+            if a[m] != b[n]:
+                print('Column name : \'{}\' and Row Number : {}'.format(i,m))
 
-print(df_diff)
-
-df_diff.to_csv('diff.csv')
+if __name__=='__main__':
+    df1 = read_excel(r'data1.xlsx')
+    df2 = read_excel(r'data2.xlsx')
+    compare_records(df1,df2)
